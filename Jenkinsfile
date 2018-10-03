@@ -15,10 +15,8 @@ pipeline {
         stage('Push') {
             steps {
                 dir('target') {
-                    docker.withRegistry('http://registry.172.25.56.1.nip.io:5000') {
-                        def customImage = docker.build("fndmnts-ngnhr-app:${env.BUILD_ID}")
-                        customImage.push()
-                    }
+                    sh "docker build -t registry.172.25.56.1.nip.io:5000/fndmnts-ngnhr-app:${env.BUILD_ID}"
+                    sh "docker push registry.172.25.56.1.nip.io:5000/fndmnts-ngnhr-app:${env.BUILD_ID}"
                 }
             }
         }
